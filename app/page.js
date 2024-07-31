@@ -1,95 +1,105 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+import {Grid, Box, FormControl, TextField, InputAdornment, Avatar, Typography, Stack, Button } from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+import ResponsiveDrawer from "./responsiveDrawer";
+import CustomizedTables from "./customizedTables";
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+// function stringToColor(string) {
+//   let hash = 0;
+//   let i;
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+//   /* eslint-disable no-bitwise */
+//   for (i = 0; i < string.length; i += 1) {
+//     hash = string.charCodeAt(i) + ((hash << 5) - hash);
+//   }
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+//   let color = '#';
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+//   for (i = 0; i < 3; i += 1) {
+//     const value = (hash >> (i * 8)) & 0xff;
+//     color += `00${value.toString(16)}`.slice(-2);
+//   }
+//   /* eslint-enable no-bitwise */
+
+//   return color;
+// }
+
+// function stringAvatar(name) {
+//   return {
+//     sx: {
+//       bgcolor: stringToColor(name),
+//     },
+//     children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+//   };
+// }
+
+export default function HomePage() {
+  return <Box 
+    container
+    width="100vw" 
+    height="100vh"
+    display={'flex'}  
+    bgcolor={"#181C39"} 
+    color={'white'}>
+      <ResponsiveDrawer />
+      <Box
+        width={'100%'}
+        margin={'5rem 1rem'}
+        padding={'0.5rem'}
+        border={'1px solid grey'}
+        borderRadius={'0.5rem'}
+        color={'white'}
+        alignItems={'start'}
+      >
+        <FormControl variant="standard">
+          <TextField 
+            id="search" 
+            variant="outlined"
+            sx={{
+              width: '40vw',
+              padding: '0',
+              maxWidth: '500px',
+              minWidth: '200px',
+              '& .MuiOutlinedInput-root': {
+                color: 'white',
+                '& fieldset': {
+                  borderColor: 'white', // Default border color
+                },
+                '&:hover fieldset': {
+                  borderColor: 'white', // Border color on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white', // Border color when focused
+                },
+              },
+              '& .MuiInputBase-input': {
+                color: 'white', // Text color
+              },
+              '& .MuiInputLabel-root': {
+                color: 'white', // Label color
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'white', // Label color when focused
+              },
+            }}
+            InputProps={{
+              style: {
+                color: 'white',
+              },
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon style={{ color: 'white' }}/>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </FormControl>
+        <Box sx={{margin: '2rem 0'}}>
+
+        </Box>
+        <CustomizedTables  />
+    </Box>
+  </Box>
 }
