@@ -185,7 +185,6 @@ export default function HomePage() {
           <Modal
             open={open}
             onClose={handleClose}
-            sx
           >
             <Box
               display={'flex'}
@@ -205,7 +204,7 @@ export default function HomePage() {
             >
               <Typography variant="h6">Add Item</Typography>
               <Stack width={'100%'} direction='row' spacing={2}>
-                <TextField variant="outlined" fullWidth value={item} />
+                <TextField variant="outlined" fullWidth value={item} onChange={(e) => {setItem(e.target.value);}} />
                 <Button 
                   variant="contained" 
                   sx={{
@@ -222,7 +221,7 @@ export default function HomePage() {
                   }}
                 >Add</Button>
               </Stack>
-              <CameraComponent addItem={addItem} handleClose={handleClose}/>
+              <CameraComponent handleClose={handleClose}/>
             </Box>
           </Modal>  
         </Box>

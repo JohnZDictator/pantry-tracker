@@ -7,7 +7,7 @@ import axios from "axios";
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-const CameraComponent = ({addItem, handleClose}) => {
+const CameraComponent = ({ handleClose}) => {
   const camera = useRef(null);
   const [image, setImage] = useState(null);
   const [takeImage, setTakeImage] = useState(false);
@@ -47,7 +47,7 @@ const CameraComponent = ({addItem, handleClose}) => {
       });
 
       const itemName = response.data.itemName;
-      addItem(itemName);
+      // addItem(itemName);
     } catch(e) {
       console.error("Error identifying item: ", e);
     }
