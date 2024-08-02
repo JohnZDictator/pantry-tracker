@@ -58,7 +58,7 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {['Items', 'Recipes'].map((text, index) => (
-          <Link href={index === 0 ? '/' : 'recipes'} style={{textDecoration: 'none'}}>
+          <Link key={text} href={index === 0 ? '/' : 'recipes'} style={{textDecoration: 'none'}}>
             <ListItem key={text} disablePadding>
               <ListItemButton 
                   sx={{

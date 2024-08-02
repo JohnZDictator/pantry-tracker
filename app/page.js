@@ -7,6 +7,7 @@ import { firestore } from "@/firebase";
 
 import ResponsiveDrawer from "./responsiveDrawer";
 import CustomizedTables from "./customizedTables";
+import CameraComponent from "./cameraComponent";
 import { useEffect, useState } from "react";
 import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc } from "firebase/firestore";
 import EnhancedTable from "./paginatedTables";
@@ -221,7 +222,7 @@ export default function HomePage() {
                   }}
                 >Add</Button>
               </Stack>
-
+              <CameraComponent addItem={addItem} handleClose={handleClose}/>
             </Box>
           </Modal>  
         </Box>
