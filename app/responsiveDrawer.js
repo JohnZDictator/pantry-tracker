@@ -21,6 +21,7 @@ import Typography from '@mui/material/Typography';
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import FastfoodOutlinedIcon from '@mui/icons-material/FastfoodOutlined';
 import LocalDiningOutlinedIcon from '@mui/icons-material/LocalDiningOutlined';
+import Link from 'next/link';
 
 const drawerWidth = 240;
 
@@ -57,28 +58,30 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {['Items', 'Recipes'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton 
-                sx={{
-                    color: activeNavBar === index ? 'white' : 'rgb(152, 166, 197)', 
-                    backgroundColor: activeNavBar === index ? 'rgb(117, 100, 226)' : 'transparent',
-                    justifyContent: 'start',
-                    ':hover': {
-                    backgroundColor: 'rgba(117, 100, 225, 0.8)'
-                    },
-                    ':active': {
-                    backgroundColor: 'rgba(117, 100, 225, 0.8)'
-                    },
-                    padding: '12px 16px',
-                }}
-                onClick={() => handleDrawerNavigation(index)}
-            >
-              <ListItemIcon> 
-                {index === 0 ? <EventNoteOutlinedIcon sx={{color: activeNavBar === index ? 'white' : 'rgb(152, 166, 197)'}} /> : <FastfoodOutlinedIcon sx={{color: activeNavBar === index ? 'white' : 'rgb(152, 166, 197)'}} />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+          <Link href={index === 0 ? '/' : 'recipes'} style={{textDecoration: 'none'}}>
+            <ListItem key={text} disablePadding>
+              <ListItemButton 
+                  sx={{
+                      color: activeNavBar === index ? 'white' : 'rgb(152, 166, 197)', 
+                      backgroundColor: activeNavBar === index ? 'rgb(117, 100, 226)' : 'transparent',
+                      justifyContent: 'start',
+                      ':hover': {
+                      backgroundColor: 'rgba(117, 100, 225, 0.8)'
+                      },
+                      ':active': {
+                      backgroundColor: 'rgba(117, 100, 225, 0.8)'
+                      },
+                      padding: '12px 16px',
+                  }}
+                  onClick={() => handleDrawerNavigation(index)}
+              >
+                <ListItemIcon> 
+                  {index === 0 ? <EventNoteOutlinedIcon sx={{color: activeNavBar === index ? 'white' : 'rgb(152, 166, 197)'}} /> : <FastfoodOutlinedIcon sx={{color: activeNavBar === index ? 'white' : 'rgb(152, 166, 197)'}} />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </div>

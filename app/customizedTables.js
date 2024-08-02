@@ -8,7 +8,10 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
+import  DeleteIcon  from '@mui/icons-material/Delete';
+import { Button, IconButton, Stack } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -52,46 +55,71 @@ function createData(name, quantities) {
   return { name, quantities };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159),
-  createData('Ice cream sandwich', 237),
-  createData('Eclair', 262),
-  createData('Cupcake', 305),
-  createData('Gingerbread', 356),
-];
+export default function CustomizedTables({filteredPantryItems, removeItem, addItem}) {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-export default function CustomizedTables() {
-  const [selectedRow, setSelectedRow] = React.useState(null);
+  const rows = [];
+  filteredPantryItems.forEach((pantryItem) => {
+    const newData = createData(pantryItem.name, pantryItem.quantity);
+    rows.push(newData);
+  });
 
-  const handleRowClick = (row) => {
-    setSelectedRow(row);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 300 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>NAME</StyledTableCell>
-            <StyledTableCell align="right">QUANTITIES</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow 
-              key={row.name} 
-              selected={selectedRow === row}
-              onClick={() => handleRowClick(row)}
-              sx={{cursor: 'pointer'}}
-            >
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.quantities}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Paper sx={{width: '100%', overflow: 'hidden'}}>
+      <TableContainer>
+        <Table sx={{ minWidth: 300 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>NAME</StyledTableCell>
+              <StyledTableCell align="right">QUANTITY</StyledTableCell>
+              <StyledTableCell align="right"></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+              <StyledTableRow 
+                key={row.name} 
+                sx={{cursor: 'pointer'}}
+              >
+                <StyledTableCell component="th" scope="row">
+                  {row.name.charAt(0).toUpperCase() + row.name.slice(1)}
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.quantities}</StyledTableCell>
+                <StyledTableCell align="right" >
+                  <Stack direction={'row'} spacing={2} justifyContent={'end'}>
+                    <Button onClick={() => {addItem(row.name)}} sx={{backgroundColor: 'rgb(117,100,226)', color: 'white', ":hover, :active": {backgroundColor: 'rgba(117,100,226,0.8)'}}}>Add</Button>
+                    <Button onClick={() => {removeItem(row.name)}} sx={{backgroundColor: 'rgb(255,100,26)', color: 'white', ":hover, :active": {backgroundColor: 'rgba(255,100,26,0.8)'}}}>Remove</Button>
+                    
+                    {/* <IconButton onClick={() => {removeItem(row.name);}}>
+                      <DeleteIcon sx={{color:'red'}} />
+                    </IconButton> */}
+                  </Stack>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        sx={{backgroundColor: '#FFEFDD'}}
+      />
+      </TableContainer>
+    </Paper>
   );
 }
